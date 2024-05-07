@@ -83,3 +83,59 @@ print("Breadth-First Traversal:", bfs(graph, 'A'))
 # }
 
 # print("Recursive Breadth-First Traversal:", recursive_bfs(graph, 'A'))
+
+
+##########################################################################################################################
+switch case driven code
+from collections import deque
+
+def dfs(graph, start):
+    visited = set()
+    stack = [start]
+    while stack:
+        vertex = stack.pop()
+        if vertex not in visited:
+            print(vertex, end=" ")
+            visited.add(vertex)
+            stack.extend(graph[vertex] - visited)
+
+def bfs(graph, start):
+    visited = set()
+    queue = deque([start])
+    visited.add(start)
+    while queue:
+        vertex = queue.popleft()
+        print(vertex, end=" ")
+        for neighbor in graph[vertex] - visited:
+            visited.add(neighbor)
+            queue.append(neighbor)
+
+def switch_case(choice, graph, start):
+    switcher = {
+        'dfs': dfs,
+        'bfs': bfs
+    }
+    # Get the function from switcher dictionary
+    func = switcher.get(choice.lower())
+    # Execute the function
+    if func:
+        func(graph, start)
+    else:
+        print("Invalid choice")
+
+# Example usage
+graph = {
+    'A': {'B', 'C'},
+    'B': {'A', 'D', 'E'},
+    'C': {'A', 'F'},
+    'D': {'B'},
+    'E': {'B', 'F'},
+    'F': {'C', 'E'}
+}
+start_vertex = 'A'
+choice = input("Enter 'dfs' for Depth-First Search or 'bfs' for Breadth-First Search: ")
+switch_case(choice, graph, start_vertex)
+
+
+
+
